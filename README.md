@@ -14,16 +14,13 @@ After you have .Net installed you can run this application by:
 
 # Development Environment
 
-Visual Studio Code
-.Net 7.0 SDK [Download Here]{https://dotnet.microsoft.com/en-us/download/dotnet/sdk-for-vs-code?utm_source=vs-code&amp;utm_medium=referral&amp;utm_campaign=sdk-install}
-C# for Visual Studio Code Extension
-Code Runner v0.12.0
-Git / GitHub
-
+  * Visual Studio Code
+  * .Net 7.0 SDK [Download Here]{https://dotnet.microsoft.com/en-us/download/dotnet/sdk-for-vs-code?utm_source=vs-code&amp;utm_medium=referral&amp;utm_campaign=sdk-install}
+  * C# for Visual Studio Code Extension
+  * Code Runner v0.12.0
+  * Git / GitHub
 
 # Useful Websites
-
-{Make a list of websites that you found helpful in this project}
 
 - [w3schools C#](https://www.w3schools.com/cs/index.php)
 - [Microsoft - A tour of C#](https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/)
@@ -33,7 +30,7 @@ Git / GitHub
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
+A list of things that I need to fix, improve, and add in the future:
 
 - Adding the ability to compare / contrast two different loans or investments.
 - Ability to save the results to a file (probably pdf)
