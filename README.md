@@ -10,7 +10,7 @@ After you have .Net installed you can run this application by:
 * Running "code ." in the folder you named your application
 * Entering "donet run" 
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/-oewEVimZG8)
 
 # Development Environment
 
