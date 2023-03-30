@@ -1,0 +1,8 @@
+.vscode
+venv
+testing
+base
+bin
+obj
+*.csproj
+*.exe
