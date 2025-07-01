@@ -1,155 +1,146 @@
-﻿// This is a program that can calculate simple and compound interest.
-// For compound interest this program will also display an amortization table.
-// This can be used to determine the costs of simple interest loans like a car loan or a mortgage.
-// It can also be used to see how long it would take to pay of a credit card or student loan.
-// We can also use the compound interest calculator to see how much interest we would earn on a savings / invenstment account.
+﻿using System;
 
-using System;
-
-namespace Interest_Calculators
+namespace InterestCalculators
 {
-    // Structure to define variables used in both simple and compound interest calculations
-    struct BasicInput 
+    struct BasicInput
     {
         public double principal, rate, interest, total;
     }
 
-    // Main program class
-    class Program 
+    class Program
     {
         static void Main(string[] args)
         {
-            int selection;  // Variable to store user input of menu selection
+            int selection;
 
-            // Title and welcome message
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine("Welcome to my interest calculator!");
-            Console.WriteLine("----------------------------------");
+            Console.WriteLine("📈 Welcome to the Interest Calculator 📉");
+            Console.WriteLine("----------------------------------------");
             Console.ResetColor();
 
             do
             {
-                // Menu to select simple or compound interest calaculator
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Please select an option from the menu below:");
-                Console.WriteLine();
-                Console.WriteLine("1. Simple Interest");
-                Console.WriteLine("2. Compound Interest");
-                Console.WriteLine("3. Exit");
-                Console.WriteLine();
-                Console.ResetColor();
+                DisplayMenu();
+                selection = ReadInt("Enter your selection (1-3): ");
 
-                // User selection
-                Console.Write("Enter your selection: ");
-                selection = Convert.ToInt32(Console.ReadLine());
-
-                if (selection == 1) // Simple Interest calculator
+                switch (selection)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine();
-                    Console.WriteLine("You have selected Simple Interest");
-                    Console.WriteLine();
-                    Console.ResetColor();
-
-                    // Variables for simple interest calculator
-                    int months;
-                    double payment;
-
-                    // Link to Structure
-                    BasicInput userinput; 
-
-                    // Ask for information about the loan
-                    Console.Write("Enter the amount you are borrowing: $ "); 
-                        userinput.principal = Convert.ToDouble(Console.ReadLine());
-                    Console.Write("Enter the interest rate: ");
-                        userinput.rate = Convert.ToDouble(Console.ReadLine());
-                    Console.Write("Enter the number of months you are borrowing for: ");
-                        months = Convert.ToInt32(Console.ReadLine());
-
-                    // Calculate the interest, total amount to be paid, and payments
-                    userinput.interest = userinput.principal * (userinput.rate / 100);
-                    userinput.total = userinput.principal + userinput.interest;
-                    payment = userinput.total / months;
-
-                    // Display the results
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine();
-                    Console.WriteLine($"The total interest is: $ {userinput.interest:N2}");
-                    Console.WriteLine($"The total amount you will pay is: $ {userinput.total:N2}");
-                    Console.WriteLine($"The monthly payment is: $ {payment:N2}");
-                    Console.WriteLine();
-                    Console.ResetColor();
-                    Console.Write("Press Enter to continue");
+                    case 1:
+                        RunSimpleInterest();
+                        break;
+                    case 2:
+                        RunCompoundInterest();
+                        break;
+                    case 3:
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                        Console.WriteLine("\nThanks for using the Interest Calculator. Goodbye!");
+                        Console.ResetColor();
+                        return;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("⚠️ Invalid selection. Please try again.");
+                        Console.ResetColor();
+                        break;
                 }
 
-                else if (selection == 2) // Compound Interest calculator
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("You have selected Compound Interest");
-                    Console.WriteLine();
-                    Console.ResetColor();
-
-                    // Variables for compound interest calculator
-                    int years, periods;
-
-                    // Link to Structure
-                    BasicInput userinput; 
-
-                    // Ask for information about the loan or investment
-                    Console.Write("Enter the initial amount: $ ");
-                        userinput.principal = Convert.ToDouble(Console.ReadLine());
-                    Console.Write("Enter the interest rate: ");
-                        userinput.rate = Convert.ToDouble(Console.ReadLine()) / 100;
-                    Console.Write("Enter the number of years: ");
-                        years = Convert.ToInt32(Console.ReadLine());
-                    Console.Write("How many times is interest calculated per year? ");
-                        periods = Convert.ToInt32(Console.ReadLine());
-
-                    // Calculate the interest and total amount to be paid
-                    userinput.total = userinput.principal * Math.Pow((1 + (userinput.rate / periods)), (periods * years));
-                    userinput.interest = userinput.total - userinput.principal;
-
-                    // Display the results
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine();
-                    Console.WriteLine($"The total interest is: $ {userinput.interest:N2}");
-                    Console.WriteLine($"The new value is: $ {userinput.total:N2}");
-                    Console.WriteLine();
-                    
-                    Console.ForegroundColor = ConsoleColor.DarkBlue;
-                    Console.WriteLine("Amortization Table");
-                    Console.ResetColor();
-
-                    // Display the amortization table year by year by looping through the calculation
-                    for (int i = 1; i <= years; i++) 
-                        {
-                            userinput.total = userinput.principal * Math.Pow((1 + (userinput.rate / periods)), (periods * i));
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            Console.WriteLine($"The total after year {i} is: $ {userinput.total:N2}");
-                            Console.ResetColor();
-                        }
-    
-                    Console.Write("Press Enter to continue");
-                }
-
-                else if (selection == 3) // Exit program
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                    Console.WriteLine();
-                    Console.WriteLine("Thank you for using my interest calculator!");
-                    Console.WriteLine();
-                    Console.ResetColor();
-                    Environment.Exit(0);
-                }
-
-                else // Invalid selection error control
-                {
-                    Console.WriteLine("Invalid selection, please try again.");
-                }
-
+                Console.WriteLine("\nPress Enter to continue...");
                 Console.ReadLine();
-                
+
             } while (selection != 3);
+        }
+
+        static void DisplayMenu()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\nChoose an option:");
+            Console.WriteLine("1. Simple Interest 💵");
+            Console.WriteLine("2. Compound Interest 🧮");
+            Console.WriteLine("3. Exit ❌");
+            Console.ResetColor();
+        }
+
+        static void RunSimpleInterest()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n🧾 Simple Interest Calculator");
+            Console.ResetColor();
+
+            BasicInput input;
+            input.principal = ReadDouble("Enter the amount you are borrowing: $ ");
+            input.rate = ReadDouble("Enter the annual interest rate (in %): ");
+            int months = ReadInt("Enter the number of months: ");
+
+            input.interest = input.principal * (input.rate / 100);
+            input.total = input.principal + input.interest;
+            double monthlyPayment = input.total / months;
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"\n💰 Total interest: ${input.interest:N2}");
+            Console.WriteLine($"📊 Total amount paid: ${input.total:N2}");
+            Console.WriteLine($"📆 Monthly payment: ${monthlyPayment:N2}");
+            Console.ResetColor();
+        }
+
+        static void RunCompoundInterest()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n📈 Compound Interest Calculator");
+            Console.ResetColor();
+
+            BasicInput input;
+            input.principal = ReadDouble("Enter the initial amount: $ ");
+            input.rate = ReadDouble("Enter the annual interest rate (in %): ") / 100;
+            int years = ReadInt("Enter the number of years: ");
+            int periodsPerYear = ReadInt("How many times is interest applied per year? ");
+
+            // Compound Interest Formula: A = P(1 + r/n)^(nt)
+            input.total = input.principal * Math.Pow((1 + input.rate / periodsPerYear), periodsPerYear * years);
+            input.interest = input.total - input.principal;
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"\n📈 Total interest earned: ${input.interest:N2}");
+            Console.WriteLine($"🏦 Final amount: ${input.total:N2}");
+            Console.ResetColor();
+
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("\n📅 Amortization Table:");
+            Console.ResetColor();
+
+            for (int i = 1; i <= years; i++)
+            {
+                double yearlyTotal = input.principal * Math.Pow((1 + input.rate / periodsPerYear), periodsPerYear * i);
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine($"Year {i}: ${yearlyTotal:N2}");
+                Console.ResetColor();
+            }
+        }
+
+        static double ReadDouble(string prompt)
+        {
+            double value;
+            do
+            {
+                Console.Write(prompt);
+                if (double.TryParse(Console.ReadLine(), out value) && value >= 0)
+                    return value;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("⚠️ Invalid input. Please enter a positive number.");
+                Console.ResetColor();
+            } while (true);
+        }
+
+        static int ReadInt(string prompt)
+        {
+            int value;
+            do
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out value) && value > 0)
+                    return value;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("⚠️ Invalid input. Please enter a positive whole number.");
+                Console.ResetColor();
+            } while (true);
         }
     }
 }
